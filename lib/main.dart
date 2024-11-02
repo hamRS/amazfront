@@ -1,7 +1,8 @@
+import 'package:amazfront/bootstrap.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  bootstrap();
 }
 
 class MyApp extends StatelessWidget {
