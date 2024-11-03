@@ -1,4 +1,5 @@
 import 'package:amazfront/features/categories/presentation/widget/category_button_widget.dart';
+import 'package:amazfront/features/sales/presentation/widget/sales_button_widget.dart';
 import 'package:flutter/material.dart';
 
 class AmazFrontHomeScreen extends StatelessWidget {
@@ -29,6 +30,10 @@ class AmazFrontHomeScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CategoryButtonWidget(),
+            SizedBox(
+              height: 20,
+            ),
+            SalesButtonWidget(),
           ],
         ),
       ),
