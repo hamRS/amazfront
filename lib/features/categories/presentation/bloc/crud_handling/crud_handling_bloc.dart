@@ -12,6 +12,7 @@ class CrudHandlingBloc extends Bloc<CrudHandlingEvent, CrudHandlingState> {
   }) : super(CrudHandlingInitial()) {
     on<CreateCategoryButtonPressed>(_onCreateCategory);
     on<DeleteCategoryButtonPressed>(_onDeleteCategory);
+    on<UpdateCategoryButtonPressed>(_onUpdateCategory);
   }
 
   final ICategoriesRepository categoryRepository;
@@ -33,5 +34,15 @@ class CrudHandlingBloc extends Bloc<CrudHandlingEvent, CrudHandlingState> {
     await categoryRepository.deleteCategory(
       event.category.id,
     );
+  }
+
+  Future<void> _onUpdateCategory(
+    UpdateCategoryButtonPressed event,
+    Emitter<CrudHandlingState> emit,
+  ) async {
+    emit(CrudHandlingLoading());
+    final CategoryEntity category =
+        await categoryRepository.updateCategory(event.category);
+    emit(CrudHandlingSuccess(category));
   }
 }

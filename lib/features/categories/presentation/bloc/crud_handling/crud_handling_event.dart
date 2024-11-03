@@ -19,9 +19,9 @@ class CreateCategoryButtonPressed extends CrudHandlingEvent {
 }
 
 class UpdateCategoryButtonPressed extends CrudHandlingEvent {
-  const UpdateCategoryButtonPressed(
-    this.category,
-  );
+  const UpdateCategoryButtonPressed({
+    required this.category,
+  });
 
   final CategoryEntity category;
 
