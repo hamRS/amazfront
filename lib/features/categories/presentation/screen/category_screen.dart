@@ -4,6 +4,7 @@ import 'package:amazfront/features/categories/data/repository/categories_reposit
 import 'package:amazfront/features/categories/domain/repository/categories_repository.dart';
 import 'package:amazfront/features/categories/presentation/bloc/categories_list/categories_bloc.dart';
 import 'package:amazfront/features/categories/presentation/bloc/crud_handling/crud_handling_bloc.dart';
+import 'package:amazfront/features/categories/presentation/helpers/dialog_helper.dart';
 import 'package:amazfront/features/categories/presentation/widget/category_item.dart';
 import 'package:amazfront/features/categories/presentation/widget/category_search_field.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,9 @@ class CategoryScreen extends StatelessWidget {
           BlocProvider(
             create: (context) => CategoriesBloc(
               categoriesRepository: categoriesRepository,
-            ),
+            )..add(
+                const GetCategoriesEvent(),
+              ),
           ),
           BlocProvider(
             create: (context) => CrudHandlingBloc(
@@ -75,8 +78,27 @@ class CategoryScreen extends StatelessWidget {
   }
 }
 
-class _CategoryListSection extends StatelessWidget {
+class _CategoryListSection extends StatefulWidget {
   const _CategoryListSection({super.key});
+
+  @override
+  State<_CategoryListSection> createState() => _CategoryListSectionState();
+}
+
+class _CategoryListSectionState extends State<_CategoryListSection> {
+  late TextEditingController _editNameController;
+
+  @override
+  void initState() {
+    super.initState();
+    _editNameController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _editNameController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,6 +126,26 @@ class _CategoryListSection extends StatelessWidget {
             itemBuilder: (context, index) {
               return CategoryItemWidget(
                 category: state.filteredList[index],
+                onEdit: () {
+                  showEditCategoryDialog(
+                    context: context,
+                    title: 'Edit Category name',
+                    onConfirm: () {
+                      context.read<CrudHandlingBloc>().add(
+                            UpdateCategoryButtonPressed(
+                              category: state.filteredList[index].copyWith(
+                                name: _editNameController.text,
+                              ),
+                            ),
+                          );
+                      context.read<CategoriesBloc>().add(
+                            const GetCategoriesEvent(),
+                          );
+                      _editNameController.clear();
+                    },
+                    controller: _editNameController,
+                  );
+                },
                 onDelete: () {
                   context.read<CrudHandlingBloc>().add(
                         DeleteCategoryButtonPressed(
