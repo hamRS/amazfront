@@ -1,7 +1,5 @@
 import 'package:amazfront/main.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
 
 Future<void> bootstrap() async {
   // Avoid errors caused by flutter upgrade.
@@ -10,6 +8,6 @@ Future<void> bootstrap() async {
   // Open the database and store the reference.
 
   runApp(
-    const MyApp(),
+    const AmazfrontApp(),
   );
 }
