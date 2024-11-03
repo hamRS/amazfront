@@ -1,3 +1,4 @@
+import 'package:amazfront/features/sales/presentation/widget/product_search_field_widget.dart';
 import 'package:amazfront/features/sales/presentation/widget/sales_product_card_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -27,6 +28,11 @@ class SalesScreen extends StatelessWidget {
       ),
       body: const Column(
         children: [
+          //Search Field Widget
+          SizedBox(
+            height: 10,
+          ),
+          ProductSearchFieldWidget(),
           SalesProductCardWidget(),
           SalesProductCardWidget(),
         ],
