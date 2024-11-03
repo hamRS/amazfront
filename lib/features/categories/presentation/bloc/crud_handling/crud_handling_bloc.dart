@@ -1,3 +1,5 @@
+import 'package:amazfront/features/categories/data/model/category_model.dart';
+import 'package:amazfront/features/categories/domain/entity/category_entity.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 

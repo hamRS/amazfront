@@ -9,4 +9,21 @@ sealed class CategoriesState extends Equatable {
 
 final class CategoriesInitial extends CategoriesState {}
 
-final class Cat4egoriesLoading extends CategoriesState {}
+final class CategoriesLoading extends CategoriesState {}
+
+final class CategoriesLoaded extends CategoriesState {
+  final List<CategoryModel> categories;
+
+  const CategoriesLoaded(this.categories);
+  @override
+  List<Object> get props => [
+        categories,
+      ];
+  CategoriesLoaded copyWith({
+    List<CategoryModel>? categories,
+  }) {
+    return CategoriesLoaded(
+      categories ?? this.categories,
+    );
+  }
+}

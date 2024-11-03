@@ -1,6 +1,7 @@
 import 'package:amazfront/core/database_helper.dart';
 import 'package:amazfront/features/categories/data/datasource/i_categories_datasource.dart';
 import 'package:amazfront/features/categories/data/model/category_model.dart';
+import 'package:amazfront/features/categories/domain/entity/category_entity.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:uuid/uuid.dart';
 
@@ -9,10 +10,10 @@ class CategoriesLocalDatasource implements ICategoriesDatasource {
 
   final AmazFrontDataBaseHelper localDB;
   @override
-  Future<CategoryModel> createCategory(String name) {
+  Future<CategoryEntity> createCategory(String name) {
     final catModel = CategoryModel(
       id: const Uuid().v4(),
-      nombre: name,
+      name: name,
     );
     localDB.database.then(
       (Database db) {
@@ -23,7 +24,9 @@ class CategoriesLocalDatasource implements ICategoriesDatasource {
         );
       },
     );
-    return Future.value(catModel);
+    return Future.value(
+      catModel.toEntity(),
+    );
   }
 
   @override
@@ -41,17 +44,17 @@ class CategoriesLocalDatasource implements ICategoriesDatasource {
   }
 
   @override
-  Future<List<CategoryModel>> getCategories() {
+  Future<List<CategoryEntity>> getCategories() {
     return localDB.database.then(
       (Database db) {
-        final List<CategoryModel> categories = [];
+        final List<CategoryEntity> categories = [];
         db.query('CATEGORY').then(
           (List<Map<String, dynamic>> value) {
             for (final Map<String, dynamic> item in value) {
               categories.add(
-                CategoryModel(
+                CategoryEntity(
                   id: item['id'],
-                  nombre: item['nombre'],
+                  name: item['nombre'],
                 ),
               );
             }
@@ -63,10 +66,10 @@ class CategoriesLocalDatasource implements ICategoriesDatasource {
   }
 
   @override
-  Future<CategoryModel> getCategory(String id) {
+  Future<CategoryEntity> getCategory(String id) {
     return localDB.database.then(
       (Database db) {
-        final List<CategoryModel> categories = [];
+        final List<CategoryEntity> categories = [];
         db.query(
           'CATEGORY',
           where: 'id = ?',
@@ -75,9 +78,9 @@ class CategoriesLocalDatasource implements ICategoriesDatasource {
           (List<Map<String, dynamic>> value) {
             for (final Map<String, dynamic> item in value) {
               categories.add(
-                CategoryModel(
+                CategoryEntity(
                   id: item['id'],
-                  nombre: item['nombre'],
+                  name: item['nombre'],
                 ),
               );
             }
@@ -89,12 +92,16 @@ class CategoriesLocalDatasource implements ICategoriesDatasource {
   }
 
   @override
-  Future<CategoryModel> updateCategory(CategoryModel category) {
+  Future<CategoryEntity> updateCategory(CategoryEntity category) {
+    final CategoryModel categoryModel = CategoryModel(
+      id: category.id,
+      name: category.name,
+    );
     localDB.database.then(
       (Database db) {
         db.update(
           'CATEGORY',
-          category.toMap(),
+          categoryModel.toMap(),
           where: 'id = ?',
           whereArgs: [category.id],
         );
