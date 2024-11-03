@@ -8,30 +8,33 @@ sealed class CrudHandlingEvent extends Equatable {
 }
 
 class CreateCategoryButtonPressed extends CrudHandlingEvent {
+  const CreateCategoryButtonPressed({
+    required this.name,
+  });
+
   final String name;
-  const CreateCategoryButtonPressed(
-    this.name,
-  );
 
   @override
   List<Object> get props => [name];
 }
 
 class UpdateCategoryButtonPressed extends CrudHandlingEvent {
-  final CategoryEntity category;
   const UpdateCategoryButtonPressed(
     this.category,
   );
+
+  final CategoryEntity category;
 
   @override
   List<Object> get props => [category];
 }
 
 class DeleteCategoryButtonPressed extends CrudHandlingEvent {
+  const DeleteCategoryButtonPressed({
+    required this.category,
+  });
+
   final CategoryEntity category;
-  const DeleteCategoryButtonPressed(
-    this.category,
-  );
 
   @override
   List<Object> get props => [

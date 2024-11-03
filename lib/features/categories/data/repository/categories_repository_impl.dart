@@ -14,25 +14,21 @@ class CategoriesRepositoryImpl implements ICategoriesRepository {
 
   @override
   Future<void> deleteCategory(String id) {
-    // TODO: implement deleteCategory
-    throw UnimplementedError();
+    return localDatasource.deleteCategory(id);
   }
 
   @override
   Future<List<CategoryEntity>> getCategories() {
-    // TODO: implement getCategories
-    throw UnimplementedError();
+    return localDatasource.getCategories();
   }
 
   @override
   Future<CategoryEntity> getCategory(String id) {
-    // TODO: implement getCategory
-    throw UnimplementedError();
+    return localDatasource.getCategory(id);
   }
 
   @override
   Future<CategoryEntity> updateCategory(CategoryEntity category) {
-    // TODO: implement updateCategory
-    throw UnimplementedError();
+    return localDatasource.updateCategory(category);
   }
 }

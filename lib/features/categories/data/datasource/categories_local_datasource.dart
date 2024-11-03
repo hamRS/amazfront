@@ -44,25 +44,19 @@ class CategoriesLocalDatasource implements ICategoriesDatasource {
   }
 
   @override
-  Future<List<CategoryEntity>> getCategories() {
-    return localDB.database.then(
-      (Database db) {
-        final List<CategoryEntity> categories = [];
-        db.query('CATEGORY').then(
-          (List<Map<String, dynamic>> value) {
-            for (final Map<String, dynamic> item in value) {
-              categories.add(
-                CategoryEntity(
-                  id: item['id'],
-                  name: item['nombre'],
-                ),
-              );
-            }
-          },
-        );
-        return categories;
-      },
-    );
+  Future<List<CategoryEntity>> getCategories() async {
+    final db = await localDB.database;
+    final List<Map<String, Object?>> categoriesMap = await db.query('CATEGORY');
+    final List<CategoryEntity> categories = [];
+    for (final Map<String, Object?> item in categoriesMap) {
+      categories.add(
+        CategoryEntity(
+          id: item['id'] as String,
+          name: item['name'] as String,
+        ),
+      );
+    }
+    return categories;
   }
 
   @override

@@ -1,29 +1,27 @@
 part of 'categories_bloc.dart';
 
-sealed class CategoriesState extends Equatable {
-  const CategoriesState();
+class CategoriesState extends Equatable {
+  const CategoriesState({
+    this.originalList = const <CategoryEntity>[],
+    this.filteredList = const <CategoryEntity>[],
+  });
 
-  @override
-  List<Object> get props => [];
-}
+  final List<CategoryEntity> originalList;
+  final List<CategoryEntity> filteredList;
 
-final class CategoriesInitial extends CategoriesState {}
-
-final class CategoriesLoading extends CategoriesState {}
-
-final class CategoriesLoaded extends CategoriesState {
-  final List<CategoryModel> categories;
-
-  const CategoriesLoaded(this.categories);
-  @override
-  List<Object> get props => [
-        categories,
-      ];
-  CategoriesLoaded copyWith({
-    List<CategoryModel>? categories,
+  CategoriesState copyWith({
+    List<CategoryEntity>? originalList,
+    List<CategoryEntity>? filteredList,
   }) {
-    return CategoriesLoaded(
-      categories ?? this.categories,
+    return CategoriesState(
+      originalList: originalList ?? this.originalList,
+      filteredList: filteredList ?? this.filteredList,
     );
   }
+
+  @override
+  List<Object> get props => [
+        originalList,
+        filteredList,
+      ];
 }

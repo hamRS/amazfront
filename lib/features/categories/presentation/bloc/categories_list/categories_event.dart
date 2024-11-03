@@ -11,7 +11,11 @@ class GetCategoriesEvent extends CategoriesEvent {
   const GetCategoriesEvent();
 }
 
-class FilterCategories extends CategoriesEvent {
-  final String id;
-  const FilterCategories(this.id);
+class FilterCategoriesEvent extends CategoriesEvent {
+  const FilterCategoriesEvent({required this.value});
+  final String value;
+}
+
+class ResetFilteredListEvent extends CategoriesEvent {
+  const ResetFilteredListEvent();
 }
