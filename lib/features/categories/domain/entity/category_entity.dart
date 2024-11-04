@@ -17,6 +17,14 @@ class CategoryEntity extends Equatable {
       id: id ?? this.id,
     );
   }
+ static CategoryEntity defaultCategory() {
+
+    return const CategoryEntity(
+      name: 'defaultName',
+      id: 'defaultId',
+    );
+
+  }
 
   @override
   List<Object?> get props => [

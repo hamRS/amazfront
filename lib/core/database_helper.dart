@@ -32,6 +32,15 @@ class AmazFrontDataBaseHelper {
     await db.execute('''
         'CREATE TABLE CATEGORY(id TEXT PRIMARY KEY, name TEXT)'
       ''');
+    await db.execute('''
+      CREATE TABLE PRODUCT(
+        idProducto TEXT PRIMARY KEY,
+        nombre TEXT,
+        precioVenta REAL,
+        categoriaId TEXT,
+        FOREIGN KEY (categoriaId) REFERENCES CATEGORY(id)
+      )
+    ''');
     return;
   }
 }
